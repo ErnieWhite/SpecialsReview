@@ -61,7 +61,6 @@ class Controller:
                 self.view.rc_treeview.insert('', tk.END, values=row)
         print(self.model.rate_cards_header)
 
-
     @staticmethod
     def get_csv_special_data(f: str):
         """Load the data in f into a dictionary"""
