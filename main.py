@@ -2,16 +2,30 @@ import pandas as pd
 import csv
 
 
+def read_data(f):
+    with open(f, 'r', encoding='Windows-1252', newline='') as csv_file:
+
+        lines = csv.DictReader(csv_file)
+
+        lst = [[], []]
+
+        for line in lines:
+            if line['Price Basis#']:
+                lst[0].append(line)
+            if line['Cost Basis#']:
+                lst[1].append(line)
+
+        return lst
+
+
 def main():
-    data_types = {
-        Matrix ID,
-        Matrix Tag Comment,
-        Matrix Type,
-        Diff. Matrix Info.,
-                           Branch/Terr.,Home Branch,Bill To ID,Customer ID,Customer Name,Price Class,Outside Salesperson,Price Line,SellGroupAll,SellGroupMscAll,SellGroupMregAll,PROD_NBR,Product Description,Price Date Ovrd.,LIST,UMSP,CMP,STD-COST,REP-COST,AVG-COST,LASTCOST,Lnd Cost,Avg Lnd,Price Basis#,Price Formula,Qty Break Basis,Qty Break Formula,Qty Brk. Form Constant,Qty Break Points,Qty Break UOM,Qty Brk. Form Multplier,Split Qty,Cost Basis#,Cost Formula,Effective Date,Expire Date,Enable Rnding Rules
-}
-    cs_df = pd.read_csv('data/cs.csv', header=0, encoding='Windows-1252')
-    print(cs_df.head())
+    cs = read_data('data/cs.csv')
+    bs = read_data('data/bs.csv')
+    rc = read_data('data/rc.csv')
+    print(f'Price: {len(cs[0])}\tCost: {len(cs[1])}')
+    print(f'Price: {len(bs[0])}\tCost: {len(bs[1])}')
+    print(f'Price: {len(rc[0])}\tCost: {len(rc[1])}')
+
 
 if __name__ == "__main__":
     main()
