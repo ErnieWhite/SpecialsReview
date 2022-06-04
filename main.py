@@ -2,28 +2,16 @@ import pandas as pd
 import csv
 
 
-def read_specials_file(f) -> list:
-    with open(f, 'r', newline='') as csv_file:
-        dct = list(csv.DictReader(csv_file))
-        return dct
-
-def create_specials_dictionary(f) -> dict:
-    d = dict()
-    for entry in f:
-       if ':'.join([entry['Customer ID'], entry['PROD_NBR']]) in d.keys():
-          if entry['Price Basis#'] != '':
-              pass
-          if entry['Cost Basis#'] != '':
-              pass
-
 def main():
-    cs_all_entries = read_specials_file("./data/cs.csv")
-    bs_all_entries = read_specials_file("./data/bs.csv")
-    rc_all_entries = read_specials_file("./data/rc.csv")
-    print(cs_all_entries[0].keys())
-    print(bs_all_entries[0].keys())
-    print(rc_all_entries[0].keys())
-
+    data_types = {
+        Matrix ID,
+        Matrix Tag Comment,
+        Matrix Type,
+        Diff. Matrix Info.,
+                           Branch/Terr.,Home Branch,Bill To ID,Customer ID,Customer Name,Price Class,Outside Salesperson,Price Line,SellGroupAll,SellGroupMscAll,SellGroupMregAll,PROD_NBR,Product Description,Price Date Ovrd.,LIST,UMSP,CMP,STD-COST,REP-COST,AVG-COST,LASTCOST,Lnd Cost,Avg Lnd,Price Basis#,Price Formula,Qty Break Basis,Qty Break Formula,Qty Brk. Form Constant,Qty Break Points,Qty Break UOM,Qty Brk. Form Multplier,Split Qty,Cost Basis#,Cost Formula,Effective Date,Expire Date,Enable Rnding Rules
+}
+    cs_df = pd.read_csv('data/cs.csv', header=0, encoding='Windows-1252')
+    print(cs_df.head())
 
 if __name__ == "__main__":
     main()
