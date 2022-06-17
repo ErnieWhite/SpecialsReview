@@ -6,6 +6,11 @@ __pycache__/
 # IDE files
 .idea/
 
+# output files
+bs_output.txt
+cs_output.txt
+*.xls;xlsx;csv
+
 # C extensions
 *.so
 

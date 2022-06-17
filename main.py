@@ -1,4 +1,5 @@
 import csv
+import pprint
 
 
 def get_basis_name(basis_number):
@@ -87,6 +88,8 @@ def create_specials_dict(specials: list[dict]):
         branch = special['Home Branch'] if special['Home Branch'] != '1000' else special['Branch/Terr.']
         if branch not in specials_dict:
             specials_dict[branch] = {}
+        if not special['PROD_NBR'].isdecimal():
+            special['PROD_NBR'] = special['PROD_NBR'][1:]
         key = ':'.join([special['Branch/Terr.'], special['Customer ID'], special['PROD_NBR']])
         if key not in specials_dict[branch]:
             specials_dict[branch][key] = {
@@ -94,7 +97,7 @@ def create_specials_dict(specials: list[dict]):
                 'Diff. Matrix Info.': special['Diff. Matrix Info.'],
                 'Home Branch': special['Home Branch'],
                 'Job': 'Y' if special['Bill To ID'] == special['Customer ID'] else 'N',
-                'Bill To ID': special['Bill To ID'],
+                'Bill To ID': special['Bill To ID'] if special['Bill To ID'] != '' else special['Customer ID'],
                 'Customer ID': special['Customer ID'],
                 'Customer Name': special['Customer Name'],
                 'Rate Card': special['Price Class'],
@@ -152,6 +155,10 @@ def main():
 
     print(f'CS Price {len(cs_dict)}')
     print(f'BS Price {len(bs_dict)}')
+    with open('cs_output.txt', 'wt') as out:
+        pprint.pprint(cs_dict, stream=out)
+    with open('bs_output.txt', 'wt') as out:
+        pprint.pprint(bs_dict, stream=out)
 
 
 if __name__ == "__main__":
